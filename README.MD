@@ -91,3 +91,8 @@ Opens the turn on the table.
 ```
 
 Opens the river on the table.
+
+
+## Authors
+
+- [@orex](https://t.me/OreX_x)
