@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PokerOfflineClient.Pages.RoomPage"
+             xmlns:viewmodel="clr-namespace:PokerOfflineClient.ViewModels"
+             x:DataType="viewmodel:RoomViewModel"
+             Title="RoomPage">
+    <Grid>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1" Margin="10,0,10,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Image 
+                Margin="5"
+                Source="{Binding Table1}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+            <Image 
+                Grid.Column="1"
+                Margin="5"
+                Source="{Binding Table2}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+            <Image 
+                Grid.Column="2"
+                Margin="5"
+                Source="{Binding Table3}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+            <Image 
+                Grid.Column="3"
+                Margin="5"
+                Source="{Binding Table4}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+            <Image 
+                Grid.Column="4"
+                Margin="5"
+                Source="{Binding Table5}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+
+        </Grid>
+        
+        
+        <Grid Grid.Row="2" Margin="50,20,50,20">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Image 
+                Source="{Binding FirstCard}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+
+            <Image 
+                Grid.Column="1"
+                Source="{Binding SecondCard}"
+                HorizontalOptions="Center" 
+                VerticalOptions="Center"/>
+        </Grid>
+
+
+        <Grid Grid.Row="4" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <Button 
+                Margin="5,0,0,10"
+                Grid.Column="0"
+                Text="finish"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RoomViewModel}}, Path=TapFinishGameCommand}"/>
+            
+            <Button 
+                Margin="5,0,5,10"
+                Grid.Column="1"
+                IsEnabled="{Binding EnableButtonNextTap}"
+                Text="{Binding TextButtonNextTap}"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RoomViewModel}}, Path=TapNextStepCommand}"/>
+
+            <Button 
+                Margin="0,0,5,10"
+                Grid.Column="2"
+                Text="restart"
+                Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:RoomViewModel}}, Path=TapRestartGameCommand}"/>
+
+        </Grid>
+    </Grid>
+</ContentPage>
