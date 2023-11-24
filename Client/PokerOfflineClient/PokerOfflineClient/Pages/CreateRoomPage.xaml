@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PokerOfflineClient.Pages.CreateRoomPage"
+              xmlns:viewmodel="clr-namespace:PokerOfflineClient.ViewModels"
+             NavigationPage.HasBackButton="False"
+             Shell.NavBarIsVisible="False"
+             Title="CreateRoomPage">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="50"/>
+            <RowDefinition/>
+            <RowDefinition Height="60"/>
+        </Grid.RowDefinitions>
+
+        <Label 
+            Text="Создание команты"
+            FontSize="36"
+            HorizontalOptions="Center"
+            VerticalOptions="Center"/>
+
+        <Entry
+            Grid.Row="1"
+            Margin="20,0,20,0"
+            Placeholder="Poker room"
+            Text="{Binding RoomName}"/>
+
+        <Button 
+            Grid.Row="3"
+            Margin="20,0,20,10"
+            Text="Create and join"
+            Command="{Binding Source={RelativeSource 
+            AncestorType={x:Type viewmodel:CreateRoomViewModel}}, Path=CreateRoomCommand}"/>
+
+    </Grid>
+</ContentPage>

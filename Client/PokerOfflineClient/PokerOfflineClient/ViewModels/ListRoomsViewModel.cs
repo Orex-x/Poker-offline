@@ -11,6 +11,9 @@ namespace PokerOfflineClient.ViewModels
         [ObservableProperty]
         ObservableCollection<string> items;
 
+        [ObservableProperty]
+        bool isRefreshing;
+
 
         private readonly IApiClient _apiClient;
 
@@ -35,10 +38,24 @@ namespace PokerOfflineClient.ViewModels
         }
 
         [RelayCommand]
+        async Task Settings()
+        {
+            await Shell.Current.GoToAsync(nameof(SettingsPage));
+        }
+        
+        
+        [RelayCommand]
         async Task CreateNewRoom(string name)
         {
-            await Task.CompletedTask;
-            //await Shell.Current.GoToAsync(nameof(CreateRoomPage));
+            await Shell.Current.GoToAsync(nameof(CreateRoomPage));
+        }
+
+        [RelayCommand]
+        async Task Refresh()
+        {
+            Items = new(await _apiClient.GetRooms());
+            await Task.Delay(400);
+            IsRefreshing = false;
         }
     }
 }

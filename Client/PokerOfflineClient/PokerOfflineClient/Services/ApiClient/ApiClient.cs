@@ -14,6 +14,14 @@ namespace PokerOffline.Services.ApiClient
             _httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
         }
 
+        public void SetBaseUrl(string baseUrl)
+        {
+            _httpClient.Dispose();
+            _httpClient = new HttpClient();
+            _httpClient.BaseAddress = new Uri(baseUrl);
+            _httpClient.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
+        }
+
         public async Task<HttpResponseMessage> GetAsync(string endpoint, Dictionary<string, object> queryParams = null)
         {
             var uriBuilder = new UriBuilder(_httpClient.BaseAddress + endpoint);
@@ -71,7 +79,7 @@ namespace PokerOffline.Services.ApiClient
 
         public async Task<bool> JoinRoom(string roomName)
         {
-            var endpoint = "/joinRoom";
+            var endpoint = "joinRoom";
 
             var param = new Dictionary<string, object>() {
                 {"name", roomName},
@@ -134,7 +142,7 @@ namespace PokerOffline.Services.ApiClient
             return response.IsSuccessStatusCode;
         }
 
-  /*      public async Task<string> GetStatus(string roomName)
+        public async Task<string> GetStatus(string roomName)
         {
             var endpoint = "/getStatus";
 
@@ -148,25 +156,6 @@ namespace PokerOffline.Services.ApiClient
                 return "";
 
             return await response.Content.ReadAsStringAsync();
-        }*/
-
-        public async Task<string> GetStatus(string roomName)
-        {
-            var url = $"http://192.168.0.126:8080/getStatus?name={roomName}";
-            using (var client = new HttpClient())
-            {
-                client.Timeout = TimeSpan.FromMilliseconds(Timeout.Infinite);
-                var request = new HttpRequestMessage(HttpMethod.Get, url);
-                using (var response = await client.SendAsync(
-                    request, HttpCompletionOption.ResponseHeadersRead))
-                {
-
-                    if (!response.IsSuccessStatusCode)
-                        return "";
-
-                    return await response.Content.ReadAsStringAsync();
-                }
-            }
         }
 
         public async Task<string> GetHand(string roomName)
@@ -249,6 +238,29 @@ namespace PokerOffline.Services.ApiClient
             var response = await GetAsync(action, param);
 
             return response.IsSuccessStatusCode;
+        }
+
+        public async Task<int> GetCountPeople(string roomName)
+        {
+            var endpoint = "getCountPeople";
+
+            var param = new Dictionary<string, object>() {
+                {"name", roomName},
+            };
+
+            var response = await GetAsync(endpoint, param);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadAsStringAsync();
+                try
+                {
+                    return Convert.ToInt32(result);
+                }
+                catch(Exception){}
+            }
+
+            return 0;
         }
     }
 }

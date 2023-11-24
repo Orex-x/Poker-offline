@@ -10,5 +10,7 @@ public partial class AppShell : Shell
 
         Routing.RegisterRoute(nameof(RoomPage), typeof(RoomPage));
         Routing.RegisterRoute(nameof(ListRoomsPage), typeof(ListRoomsPage));
+        Routing.RegisterRoute(nameof(CreateRoomPage), typeof(CreateRoomPage));
+        Routing.RegisterRoute(nameof(SettingsPage), typeof(SettingsPage));
     }
 }

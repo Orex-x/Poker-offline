@@ -7,10 +7,13 @@ public partial class RoomPage : ContentPage
     private readonly RoomViewModel _roomViewModel;
     public RoomPage(RoomViewModel vm)
 	{
+        var tapGestureRecognizer = new TapGestureRecognizer();
+
         InitializeComponent();
         _roomViewModel = vm;
         BindingContext = vm;
     }
+
 
     protected override bool OnBackButtonPressed()
     {

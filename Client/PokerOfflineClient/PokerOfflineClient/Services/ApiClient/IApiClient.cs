@@ -2,7 +2,10 @@
 {
     public interface IApiClient
     {
+        public void SetBaseUrl(string baseUrl);
         Task<ICollection<string>> GetRooms();
+
+        Task<int> GetCountPeople(string roomName);
 
         Task<bool> JoinRoom(string roomName);
 

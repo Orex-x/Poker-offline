@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using PokerOffline.Services.ApiClient;
+using PokerOfflinelient.ViewModels;
+using System.Windows.Input;
 
 namespace PokerOfflineClient.ViewModels
 {
@@ -15,20 +17,22 @@ namespace PokerOfflineClient.ViewModels
         string roomName;
 
         [ObservableProperty]
-        string textButtonNextTap;
+        string textButtonNextTap = "StartGame";
 
         [ObservableProperty]
-        bool enableButtonNextTap;
+        int countPeople;
 
         [ObservableProperty]
-        ImageSource firstCard;
+        bool enableButtonNextTap = true;
 
         [ObservableProperty]
-        ImageSource secondCard;
-
+        private CardViewModel firstCard, secondCard;
 
         [ObservableProperty]
         ImageSource table1, table2, table3, table4, table5;
+
+        [ObservableProperty]
+        ImageSource backgroundImage;
 
         private string[] actions = new[] { "/startGame", "/flop",  "/turn", "/river" };
         private int actionIndex = 0;
@@ -37,16 +41,38 @@ namespace PokerOfflineClient.ViewModels
         public RoomViewModel(IApiClient apiClient)
         {
             _apiClient = apiClient;
-            TextButtonNextTap = "StartGame";
-            gameEvent = "Waiting";
-            EnableButtonNextTap = true;
 
-            Task.Run(Start);       
+           
+            
+            Task.Run(Init);       
         }
 
-        public async Task Start()
+        
+        public async Task Init()
         {
-            await Task.Delay(1000); 
+            var choosenShirt = await SecureStorage.GetAsync("choosen_shirt");
+
+            if (string.IsNullOrEmpty(choosenShirt))
+            {
+                choosenShirt = "shirt1.png";
+            }
+
+            FirstCard = new CardViewModel()
+            {
+                ShirtFileName = choosenShirt
+            };
+            SecondCard = new CardViewModel()
+            {
+                ShirtFileName = choosenShirt
+            };
+
+            TapHandCommand = new Command((obj) => {
+                var card = obj as CardViewModel;
+                card.TurnOver();
+            });
+
+            await Task.Delay(1000);
+            CountPeople = await _apiClient.GetCountPeople(RoomName);
             while (true)
             {
                 await StatusHandler();
@@ -57,10 +83,13 @@ namespace PokerOfflineClient.ViewModels
         [RelayCommand]
         async Task TapNextStep()
         {
-            await _apiClient.DoAction(RoomName, actions[actionIndex]);
-            actionIndex++;
-            if (actionIndex == actions.Length)
-                actionIndex = 0;
+            var ok = await _apiClient.DoAction(RoomName, actions[actionIndex]);
+            if (ok)
+            {
+                actionIndex++;
+                if (actionIndex == actions.Length)
+                    actionIndex = 0;
+            }
         }
 
         [RelayCommand]
@@ -76,6 +105,9 @@ namespace PokerOfflineClient.ViewModels
         }
 
 
+        [ObservableProperty]
+        public ICommand tapHandCommand;
+
         public async Task StatusHandler()
         {
             gameEvent = await _apiClient.GetStatus(RoomName);
@@ -88,8 +120,12 @@ namespace PokerOfflineClient.ViewModels
                         EnableButtonNextTap = true;
                         var hand = await _apiClient.GetHand(RoomName);
                         var cards = hand.Split(' ');
-                        FirstCard = ImageSource.FromFile($"{cards[0]}.jpg");
-                        SecondCard = ImageSource.FromFile($"{cards[1]}.jpg");
+
+                        FirstCard.CardFileName = $"{cards[0]}.png";
+                        SecondCard.CardFileName = $"{cards[1]}.png";
+
+                        FirstCard.ShowShirt();
+                        SecondCard.ShowShirt();
                         break;
                     }
                 case "RestartGame":
@@ -104,8 +140,12 @@ namespace PokerOfflineClient.ViewModels
                         TextButtonNextTap = "Flop";
                         var hand = await _apiClient.GetHand(RoomName);
                         var cards = hand.Split(' ');
-                        FirstCard = ImageSource.FromFile($"{cards[0]}.jpg");
-                        SecondCard = ImageSource.FromFile($"{cards[1]}.jpg");
+
+                        FirstCard.CardFileName = $"{cards[0]}.png";
+                        SecondCard.CardFileName = $"{cards[1]}.png";
+
+                        FirstCard.ShowShirt();
+                        SecondCard.ShowShirt();
                     }
                     break;
                 case "FinishGame":
@@ -115,8 +155,8 @@ namespace PokerOfflineClient.ViewModels
                         Table3 = null;
                         Table4 = null;
                         Table5 = null;
-                        FirstCard = null;
-                        SecondCard = null;
+                        FirstCard.Source = null;
+                        SecondCard.Source = null;
                         actionIndex = 0;
                         TextButtonNextTap  = "Start game";
                         EnableButtonNextTap = true;
@@ -127,9 +167,9 @@ namespace PokerOfflineClient.ViewModels
                         TextButtonNextTap  = "Turn";
                         var table = await _apiClient.GetTable(RoomName);
                         var cards = table.Split(' ');
-                        Table1 = ImageSource.FromFile($"{cards[0]}.jpg");
-                        Table2 = ImageSource.FromFile($"{cards[1]}.jpg");
-                        Table3 = ImageSource.FromFile($"{cards[2]}.jpg");
+                        Table1 = ImageSource.FromFile($"{cards[0]}.png");
+                        Table2 = ImageSource.FromFile($"{cards[1]}.png");
+                        Table3 = ImageSource.FromFile($"{cards[2]}.png");
 
                     }
                     break;
@@ -138,7 +178,7 @@ namespace PokerOfflineClient.ViewModels
                         TextButtonNextTap  = "River";
                         var table = await _apiClient.GetTable(RoomName);
                         var cards = table.Split(' ');
-                        Table4 = ImageSource.FromFile($"{cards[3]}.jpg");
+                        Table4 = ImageSource.FromFile($"{cards[3]}.png");
                     }
                     break;
                 case "River":
@@ -148,10 +188,19 @@ namespace PokerOfflineClient.ViewModels
 
                         var table = await _apiClient.GetTable(RoomName);
                         var cards = table.Split(' ');
-                        Table5 = ImageSource.FromFile($"{cards[4]}.jpg");
+                        Table5 = ImageSource.FromFile($"{cards[4]}.png");
                     }
                     break;
-
+                case "Join":
+                    {
+                        CountPeople = await _apiClient.GetCountPeople(RoomName);
+                    }
+                    break;
+                case "Exit":
+                    {
+                        CountPeople = await _apiClient.GetCountPeople(RoomName);
+                    }
+                    break;
             }
         }
 

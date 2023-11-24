@@ -1,4 +1,5 @@
-﻿namespace PokerOfflineClient;
+﻿
+namespace PokerOfflineClient;
 
 public partial class App : Application
 {
@@ -7,5 +8,13 @@ public partial class App : Application
 		InitializeComponent();
 
 		MainPage = new AppShell();
-	}
+
+    }
+
+   
+
+    public override void CloseWindow(Window window)
+    {
+        base.CloseWindow(window);
+    }
 }

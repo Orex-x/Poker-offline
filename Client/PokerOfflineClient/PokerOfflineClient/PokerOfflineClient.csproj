@@ -32,8 +32,7 @@
 
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
-
+		<MauiIcon Include="Resources\AppIcon\appicon.svg"/>
 		<!-- Splash Screen -->
 		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
 
@@ -128,46 +127,7 @@
 	  <None Remove="Resources\Images\A♡.jpg" />
 	  <None Remove="Resources\Images\A♢.jpg" />
 	  <None Remove="Resources\Images\A♣.jpg" />
-	  <None Remove="Resources\Images\c10.jpg" />
-	  <None Remove="Resources\Images\c2.jpg" />
-	  <None Remove="Resources\Images\c3.jpg" />
-	  <None Remove="Resources\Images\c4.jpg" />
-	  <None Remove="Resources\Images\c5.jpg" />
-	  <None Remove="Resources\Images\c6.jpg" />
-	  <None Remove="Resources\Images\c7.jpg" />
-	  <None Remove="Resources\Images\c8.jpg" />
-	  <None Remove="Resources\Images\c9.jpg" />
-	  <None Remove="Resources\Images\ca0.jpg" />
-	  <None Remove="Resources\Images\cj0.jpg" />
-	  <None Remove="Resources\Images\ck0.jpg" />
-	  <None Remove="Resources\Images\cq0.jpg" />
-	  <None Remove="Resources\Images\d10.jpg" />
-	  <None Remove="Resources\Images\d2.jpg" />
-	  <None Remove="Resources\Images\d3.jpg" />
-	  <None Remove="Resources\Images\d4.jpg" />
-	  <None Remove="Resources\Images\d5.jpg" />
-	  <None Remove="Resources\Images\d6.jpg" />
-	  <None Remove="Resources\Images\d7.jpg" />
-	  <None Remove="Resources\Images\d8.jpg" />
-	  <None Remove="Resources\Images\d9.jpg" />
-	  <None Remove="Resources\Images\da0.jpg" />
-	  <None Remove="Resources\Images\dj0.jpg" />
-	  <None Remove="Resources\Images\dk0.jpg" />
 	  <None Remove="Resources\Images\dotnet_bot.svg" />
-	  <None Remove="Resources\Images\dq0.jpg" />
-	  <None Remove="Resources\Images\h10.jpg" />
-	  <None Remove="Resources\Images\h2.jpg" />
-	  <None Remove="Resources\Images\h3.jpg" />
-	  <None Remove="Resources\Images\h4.jpg" />
-	  <None Remove="Resources\Images\h5.jpg" />
-	  <None Remove="Resources\Images\h6.jpg" />
-	  <None Remove="Resources\Images\h7.jpg" />
-	  <None Remove="Resources\Images\h8.jpg" />
-	  <None Remove="Resources\Images\h9.jpg" />
-	  <None Remove="Resources\Images\ha0.jpg" />
-	  <None Remove="Resources\Images\hj0.jpg" />
-	  <None Remove="Resources\Images\hk0.jpg" />
-	  <None Remove="Resources\Images\hq0.jpg" />
 	  <None Remove="Resources\Images\JC.jpg" />
 	  <None Remove="Resources\Images\JD.jpg" />
 	  <None Remove="Resources\Images\JH.jpg" />
@@ -192,19 +152,28 @@
 	  <None Remove="Resources\Images\Q♡.jpg" />
 	  <None Remove="Resources\Images\Q♢.jpg" />
 	  <None Remove="Resources\Images\Q♣.jpg" />
-	  <None Remove="Resources\Images\s10.jpg" />
-	  <None Remove="Resources\Images\s2.jpg" />
-	  <None Remove="Resources\Images\s3.jpg" />
-	  <None Remove="Resources\Images\s4.jpg" />
-	  <None Remove="Resources\Images\s5.jpg" />
-	  <None Remove="Resources\Images\s6.jpg" />
-	  <None Remove="Resources\Images\s7.jpg" />
-	  <None Remove="Resources\Images\s8.jpg" />
-	  <None Remove="Resources\Images\s9.jpg" />
-	  <None Remove="Resources\Images\sa0.jpg" />
-	  <None Remove="Resources\Images\sj0.jpg" />
-	  <None Remove="Resources\Images\sk0.jpg" />
-	  <None Remove="Resources\Images\sq0.jpg" />
+	  <None Remove="Resources\Images\shirt1.svg" />
+	  <None Remove="Resources\Images\shirt10.svg" />
+	  <None Remove="Resources\Images\shirt11.svg" />
+	  <None Remove="Resources\Images\shirt12.svg" />
+	  <None Remove="Resources\Images\shirt13.svg" />
+	  <None Remove="Resources\Images\shirt14.svg" />
+	  <None Remove="Resources\Images\shirt15.svg" />
+	  <None Remove="Resources\Images\shirt16.svg" />
+	  <None Remove="Resources\Images\shirt17.svg" />
+	  <None Remove="Resources\Images\shirt18.svg" />
+	  <None Remove="Resources\Images\shirt19.svg" />
+	  <None Remove="Resources\Images\shirt2.svg" />
+	  <None Remove="Resources\Images\shirt20.svg" />
+	  <None Remove="Resources\Images\shirt21.svg" />
+	  <None Remove="Resources\Images\shirt3.svg" />
+	  <None Remove="Resources\Images\shirt4.svg" />
+	  <None Remove="Resources\Images\shirt5.svg" />
+	  <None Remove="Resources\Images\shirt6.svg" />
+	  <None Remove="Resources\Images\shirt7.svg" />
+	  <None Remove="Resources\Images\shirt8.svg" />
+	  <None Remove="Resources\Images\shirt9.svg" />
+	  <None Remove="Resources\Images\table0.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -214,10 +183,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <MauiXaml Update="Pages\CreateRoomPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ListRoomsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\RoomPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\SettingsPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	</ItemGroup>

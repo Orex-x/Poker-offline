@@ -1,4 +1,5 @@
-﻿using PokerOffline.Services.ApiClient;
+﻿using Microsoft.Maui.LifecycleEvents;
+using PokerOffline.Services.ApiClient;
 using PokerOfflineClient.Pages;
 using PokerOfflineClient.ViewModels;
 
@@ -17,22 +18,27 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
+        var baseUrl = SecureStorage.GetAsync("base_url").Result;
 
-		
+        if (string.IsNullOrEmpty(baseUrl))
+        {
+            baseUrl = "http://192.168.0.1";
+            SecureStorage.Default.SetAsync("base_url", baseUrl);
+        }
 
-       // builder.Services.AddSingleton<IApiClient>(new ApiClient("http://192.168.0.126:8080"));
-        builder.Services.AddSingleton<IApiClient>(new ApiClient("http://192.168.0.126:8080"));
-
+        builder.Services.AddSingleton<IApiClient>(new ApiClient(baseUrl));
+        
         builder.Services.AddTransient<RoomPage>();
         builder.Services.AddTransient<RoomViewModel>();
 
+        builder.Services.AddTransient<CreateRoomPage>();
+        builder.Services.AddTransient<CreateRoomViewModel>();
 
         builder.Services.AddTransient<ListRoomsPage>();
         builder.Services.AddTransient<ListRoomsViewModel>();
 
-        /*#if DEBUG
-		builder.Logging.AddDebug();
-#endif*/
+        builder.Services.AddTransient<SettingsPage>();
+        builder.Services.AddTransient<SettingsViewModel>();
 
         return builder.Build();
 	}
