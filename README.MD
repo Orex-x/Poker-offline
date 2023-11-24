@@ -4,7 +4,6 @@
 The project is needed in order to play poker in public places. To play poker, you will need chips, and this service will take care of shuffling and dealing cards.
 
 ## Further implementation
-- Create a mobile client
 - Create a web client
 - Add other poker versions (Omaha, Draw)
 
